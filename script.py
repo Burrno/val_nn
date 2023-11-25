@@ -35,8 +35,11 @@ def LinksPartidas(Bsoup):
 def encontrar_data(Bsoup, data_pegar, Links):
     for dia in Bsoup('div', class_='wf-label mod-large'):
         data = dia.text.replace(' ', '').replace('\n', '').replace('\t', '')
+        if data[-5:] == 'Today':
+            data = data[:-5]
+        elif data[-9:] == 'Yesterday':
+            data = data[:-9]
         data = datetime.strptime(data, '%a,%B%d,%Y').date()
-
         if data >= data_pegar:
             return 1, 0
 
